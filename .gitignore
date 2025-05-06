@@ -1,0 +1,9 @@
+#Ignorar carpeta env
+env
+
+#Ignorar carpeta pycache
+__pycache__
+
+#Ignorar .env
+.env
+
