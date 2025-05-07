@@ -13,3 +13,8 @@ def format_file():
  data['Hours_On_App'] = data['Hours_On_App'].fillna(data['Hours_On_App'].median())
  data = data.convert_dtypes()
  return data
+
+
+data = format_file()
+
+#print(data['Customer_Id'].nunique())
