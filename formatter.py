@@ -17,4 +17,7 @@ def format_file():
 
 data = format_file()
 
+
+sub_category_sales = data.groupby("Sub_Category")['Sales'].sum().reset_index()
+print(sub_category_sales["Sales"])
 #print(data['Customer_Id'].nunique())

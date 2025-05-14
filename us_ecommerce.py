@@ -7,27 +7,65 @@ st.set_page_config(page_title= "Ecommerce dashboard",page_icon=":bar_chart:",lay
 data = format_file()
 
 
+
+
+#sidebar
+st.sidebar.header("Filtros:")
+
+
+
+
+segment = st.sidebar.multiselect(
+   label="Segmento",
+   options = data['Segment'].unique(),
+   default = data['Segment'].unique()
+)
+
+category = st.sidebar.multiselect(
+   label="Categoria",
+   options = data['Category'].unique(),
+   default= data['Category'].unique()
+)
+
+
+region = st.sidebar.multiselect(
+   label="Región",
+   options= data["Region"].unique(),
+   default= data["Region"].unique()
+   
+)
+
+
+data_selection = data.query(
+   " Segment == @segment & Region == @region & Category == @category "
+)
+
+
 #metricas
 
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3, col4, col5 = st.columns(5)
 
-unique_customers = data['Customer_Id'].nunique()
-number_orders = data['Order _id'].count()
-total_sales = data['Sales'].sum()
-total_profit = data['Profit'].sum()
+unique_customers = int(data['Customer_Id'].nunique())
+number_orders = int(data_selection['Order _id'].count())
+total_sales = data_selection['Sales'].sum()
+total_profit = data_selection['Profit'].sum()
+avg_satisfaction_Score = round(data_selection['Satisfaction_Score'].mean(),2)
+star_rating = ":star:" * int(round(data_selection['Satisfaction_Score'].mean(),0))
+max_stars = 5
+stars = "⭐" * int(min(round(avg_satisfaction_Score), max_stars))
 
 
 
 
 with col1:
  st.metric(
-    label= "# Clientes",
+    label = "&#35; Clientes",
     value= unique_customers
 )
  
 with col2:
     st.metric(
-    label="# Ordenes",
+    label="&#35; Ordenes",
     value= number_orders
 )
 
@@ -42,23 +80,12 @@ with col4:
     label="Ganancias",
     value= f"{total_profit:,.2f}"
 )
-
-
-#sidebar
-
-cities = data['City'].unique() 
-regions = data["Region"].unique()
-
-st.sidebar.header("Filtros:")
-
-city = st.sidebar.selectbox(
-   label= "Ciudad",
-   options= cities
-)
-
-region = st.sidebar.selectbox(
-   label="Región",
-   options= regions
    
-)
-st.dataframe(data.head(10))
+   with col5:
+      st.metric(
+         label="AVG Puntuación",
+         value = f"{avg_satisfaction_Score}"
+      )
+
+
+st.dataframe(data_selection)
