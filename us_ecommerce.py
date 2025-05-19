@@ -6,15 +6,8 @@ st.set_page_config(page_title= "Ecommerce dashboard",page_icon=":bar_chart:",lay
 st.title("Ecommerce Dasboard")
 data = format_file()
 
-
-
-
-
 #sidebar
 st.sidebar.header("Filtros:")
-
-
-
 
 segment = st.sidebar.multiselect(
    label="Segmento",
@@ -35,6 +28,10 @@ region = st.sidebar.multiselect(
    default= data["Region"].unique()
    
 )
+
+if not segment or not category or not region:
+    st.warning("Por favor selecciona al menos una opción en cada filtro para ver los datos.")
+    st.stop()
 
 
 data_selection = data.query(
@@ -99,8 +96,12 @@ with col4:
 # Grafico de barras
 sale_by_subcategory = round(data_selection.groupby("Sub_Category")['Sales'].sum().sort_values(ascending=True).reset_index(),2)
 
-fig_subcategory_sales = px.bar(sale_by_subcategory, title="Ventas por Sub Categoria", x="Sales", y="Sub_Category", orientation="h", color_discrete_sequence= ["#00b4d8"] * len(sale_by_subcategory))
+fig_subcategory_sales = px.bar(sale_by_subcategory, title="Ventas por subcategoria", x="Sales", y="Sub_Category", orientation="h", color_discrete_sequence= ["#00b4d8"] * len(sale_by_subcategory))
 
+
+fig_subcategory_sales.update_layout(
+   yaxis_title=None
+)
 
 
 #Grafico de Pastel
@@ -123,6 +124,37 @@ st.markdown("""
             
 </style>
 """, unsafe_allow_html=True)
+
+
+#Grafico de lineas
+
+
+# Crear columna de mes (primer día del mes)
+data_selection["Month"] = data_selection["Order Date"].dt.to_period("M").dt.to_timestamp()
+
+# Crear nombre del mes (formato texto) para mostrar en hover
+data_selection["month_name"] = data_selection["Month"].dt.strftime('%B %Y')
+
+# Agrupar Profit por mes
+monthly_profit = data_selection.groupby(["Month", "month_name"])["Profit"].sum().reset_index()
+
+# Crear gráfico de línea
+fig_profit_month = px.line(
+    monthly_profit,
+    x="Month",
+    y="Profit",
+    title="Ganancia Mensual",
+    markers=True,
+    line_shape="spline",
+    color_discrete_sequence=["#00b4d8"],
+    hover_name="month_name"  
+)
+
+fig_profit_month.update_layout(
+   yaxis_title=None
+)
+
+st.plotly_chart(fig_profit_month, use_container_width=True)
 
 left_column, right_column = st.columns(2)
 
