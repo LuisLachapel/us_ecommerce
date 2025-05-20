@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 
 def format_file():
  load_dotenv()
- source = os.getenv("SOURCE")
- data = pd.read_excel(source)
+ #source = os.getenv("SOURCE")
+ data = pd.read_excel("US  E-commerce records.xlsx")
  data['Order Date'] = pd.to_datetime(data['Order Date'])
  data['Formatted_Date'] = data['Order Date'].dt.strftime('%d/%m/%Y')
  data["Order Date"] = data["Order Date"].dt.normalize()
