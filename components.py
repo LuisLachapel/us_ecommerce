@@ -1,7 +1,6 @@
 import streamlit as st
 import plotly.express as px
 
-#metricas
 
 def metrics(st,data, data_selection):
  col1, col2, col3, col4, col5 = st.columns(5)
