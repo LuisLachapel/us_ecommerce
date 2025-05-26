@@ -2,6 +2,25 @@ import streamlit as st
 import plotly.express as px
 
 
+def navbar(st):
+ st.title("Ecommerce Dasboard")
+ main, user, products = st.columns(3)
+
+ with main:
+   mainButton = st.button("Main",icon=":material/home:",use_container_width=True)
+   if mainButton:
+    st.switch_page("us_ecommerce.py")
+
+ with user:
+  userButton  = st.button("User",icon=":material/person:",use_container_width=True)
+  if userButton:
+    st.switch_page(r"pages\user_page.py")
+
+ with products:
+  productsButton = st.button("Product",icon=":material/sell:",use_container_width=True)
+  if productsButton:
+    st.switch_page(r"pages\product.page.py")
+
 def metrics(st,data, data_selection):
  col1, col2, col3, col4, col5 = st.columns(5)
 
