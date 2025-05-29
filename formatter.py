@@ -20,7 +20,8 @@ data = format_file()
 
 sub_category_sales = round(data.groupby("Sub_Category")['Sales'].sum().sort_values(ascending=False).reset_index(),2) 
 category_sales = data.groupby("Category")['Sales'].sum().reset_index()
+product = data.groupby("Product_Name")["Sales"].sum().sort_values(ascending=True).reset_index()
 
-
+#print(product.head(10))
 #print(sub_category_sales)
 #print(data['Customer_Id'].nunique())

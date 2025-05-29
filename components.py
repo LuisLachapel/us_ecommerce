@@ -1,4 +1,3 @@
-import streamlit as st
 import plotly.express as px
 
 
@@ -19,7 +18,7 @@ def navbar(st):
  with products:
   productsButton = st.button("Product",icon=":material/sell:",use_container_width=True)
   if productsButton:
-    st.switch_page(r"pages\product.page.py")
+    st.switch_page(r"pages\product_page.py")
 
 def metrics(st,data, data_selection):
  col1, col2, col3, col4, col5 = st.columns(5)
@@ -88,8 +87,6 @@ def graphics(st, data_selection):
 
  fig_pie = px.pie(data_selection, values="Sales", names="Category", color_discrete_sequence=color_pie,title="Ventas por categoria")
 
-    #st.dataframe(data_selection)
-
 
     #Color de la pagina principal
  st.markdown("""
@@ -140,8 +137,23 @@ def graphics(st, data_selection):
  right_column.plotly_chart(fig_pie,use_container_width=True)
 
 
+def set_sidebar_color(st):
+    st.markdown(
+        """
+        <style>
+        section[data-testid="stSidebar"] {
+            background-color: #001d3d; 
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+
 
 def sidebar(st, data):
+    
+    set_sidebar_color(st)
     st.sidebar.header("Filtros:")
 
     segment = st.sidebar.multiselect(
