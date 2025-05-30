@@ -326,7 +326,7 @@ def products_graphics(st,data_selection):
 )
   
   col1.plotly_chart(fig_top_sales,use_container_width=True)
-  col2.plotly_chart(fig_treemap,use_container_width=True)
-  col3.plotly_chart(fig_pie)
-  col4.plotly_chart(fig_line_ship_mode,use_container_width=True)
-  st.plotly_chart(fig_scatter_sales_profit)
+  col2.plotly_chart(fig_pie,use_container_width=True)
+  #col3.plotly_chart(fig_pie)
+  #col4.plotly_chart(fig_line_ship_mode,use_container_width=True)
+  #st.plotly_chart(fig_scatter_sales_profit)
