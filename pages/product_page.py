@@ -1,9 +1,15 @@
 import streamlit as st
+st.set_page_config(page_title= "Ecommerce dashboard",page_icon=":bar_chart:",layout='wide')
 import plotly.express as px
 from formatter import format_file
 from components import navbar, sidebar
 
+
+#Titulo
+st.title("Dasboard productos")
+
 #navbar
+
 navbar(st)
 
 data = format_file()
@@ -13,7 +19,7 @@ segment, category, region = sidebar(st, data)
 
 data_selection = data.query(
    " Segment == @segment & Region == @region & Category == @category "
-)
+).copy()
 
 #top 10 productos mas vendidos
 
@@ -43,12 +49,12 @@ fig_top_sales = px.bar(
 fig_top_sales.update_layout(yaxis=dict(autorange="reversed"),yaxis_title = None)
 
 
-
-
+#cae9ff
+#233d4d
 #grafica pastel del ship mode
-color_pie = ["#233d4d","#2471a3","#239b56", "#ffd60a"]
+color_pie = ["#239b56","#cae9ff","#233d4d", "#2a9d8f"]
 ship_mode_order = ["Same Day", "First Class", "Second Class", "Standard Class"]
-fig_pie = px.pie(data_selection,names="Ship_Mode",color_discrete_sequence=color_pie,title="Modo de Envío",category_orders={"Ship_Mode": ship_mode_order})
+fig_pie = px.pie(data_selection,names="Ship_Mode",color_discrete_sequence=color_pie,title="Modo de envío",category_orders={"Ship_Mode": ship_mode_order})
 
 
 # grafica de lineas de ship mode
@@ -84,7 +90,7 @@ fig_scatter_sales_profit = px.scatter(
     color="Sub_Category",
     size="Quantity",
     hover_data=["Product_Name"],
-    title="Relación entre Ventas y Ganancia por Producto",
+    title="Relación entre ventas y ganancia por producto",
     color_discrete_sequence=px.colors.qualitative.Pastel
 )
 
@@ -93,12 +99,15 @@ fig_scatter_sales_profit.update_layout(
     yaxis_title="Ganancia ($)"
 )
 
+color_treemap = ["#003566","#f1faee", "#415a77"]
 
 fig_treemap = px.treemap(
     data_selection,
     path=["Category", "Sub_Category", "Product_Name"],
     values="Sales",
-    title="Treemap de Ventas por categoría y producto"
+    title="Treemap de Ventas por categoría y producto",
+    color_discrete_sequence= color_treemap
+    
 )
 
 

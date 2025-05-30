@@ -1,7 +1,12 @@
 import streamlit as st
+st.set_page_config(page_title= "Ecommerce dashboard",page_icon=":bar_chart:",layout='wide')
 import plotly.express as px
 from formatter import format_file
 from components import navbar, sidebar
+
+
+#Titulo
+st.title("Dasboard de usuarios")
 
 #navbar
 navbar(st)
@@ -38,7 +43,8 @@ fig_bar = px.bar(
     data_selection.groupby("PreferredLoginDevice")["Order _id"].count().reset_index(),
     x="Order _id",
     y="PreferredLoginDevice",
-    color_discrete_sequence= ["#00b4d8"],
+    color="PreferredLoginDevice",
+    color_discrete_sequence= ["#f1faee","#2a9d8f","#415a77"],
     labels={"PreferredLoginDevice": "Dispositivo", "Order _id": "Cantidad de usuarios"},
     title="Dispositivos de inicio de sesión preferidos"
 )

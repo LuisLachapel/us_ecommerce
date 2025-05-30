@@ -2,21 +2,21 @@ import plotly.express as px
 
 
 def navbar(st):
- st.title("Ecommerce Dasboard")
+ 
  main, user, products = st.columns(3)
 
  with main:
-   mainButton = st.button("Main",icon=":material/home:",use_container_width=True)
+   mainButton = st.button("Principal",icon=":material/home:",use_container_width=True)
    if mainButton:
     st.switch_page("us_ecommerce.py")
 
  with user:
-  userButton  = st.button("User",icon=":material/person:",use_container_width=True)
+  userButton  = st.button("Usuarios",icon=":material/person:",use_container_width=True)
   if userButton:
     st.switch_page(r"pages\user_page.py")
 
  with products:
-  productsButton = st.button("Product",icon=":material/sell:",use_container_width=True)
+  productsButton = st.button("Productos",icon=":material/sell:",use_container_width=True)
   if productsButton:
     st.switch_page(r"pages\product_page.py")
 
@@ -83,7 +83,7 @@ def graphics(st, data_selection):
 
 #Grafico de Pastel
 
- color_pie = ["#003566","#f1faee", "#ffd60a"]
+ color_pie = ["#003566","#f1faee", "#415a77"]
 
  fig_pie = px.pie(data_selection, values="Sales", names="Category", color_discrete_sequence=color_pie,title="Ventas por categoria")
 
