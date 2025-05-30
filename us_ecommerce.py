@@ -2,9 +2,9 @@ import streamlit as st
 st.set_page_config(page_title= "Ecommerce dashboard",page_icon=":bar_chart:",layout='wide')
 
 
-import plotly.express as px
+
 from formatter import format_file
-from components import metrics, graphics, sidebar, navbar
+from components import metrics, main_graphics, sidebar, navbar,filter_data
 
 
 
@@ -22,9 +22,8 @@ navbar(st)
 
 segment, category, region = sidebar(st, data)
 
-data_selection = data.query(
-   " Segment == @segment & Region == @region & Category == @category "
-)
+data_selection = filter_data(data,segment, category, region)
+
 
 #metricas
 
@@ -33,5 +32,5 @@ metrics(st,data, data_selection)
 
 # Graficos 
 
-graphics(st,data_selection)
+main_graphics(st,data_selection)
 
