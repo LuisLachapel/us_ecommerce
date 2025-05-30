@@ -13,12 +13,12 @@ def navbar(st):
  with user:
   userButton  = st.button("Usuarios",icon=":material/person:",use_container_width=True)
   if userButton:
-    st.switch_page(r"pages\user_page.py")
+    st.switch_page(r"pages/user_page.py")
 
  with products:
   productsButton = st.button("Productos",icon=":material/sell:",use_container_width=True)
   if productsButton:
-    st.switch_page(r"pages\product_page.py")
+    st.switch_page(r"pages/product_page.py")
 
 def metrics(st,data, data_selection):
  col1, col2, col3, col4, col5 = st.columns(5)
